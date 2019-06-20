@@ -1,0 +1,9 @@
+<div class="customer-list-popup" id="customer-list-popup" [hidden]="!role('role_role_item_mul_read')">
+    <div class="title ">
+        <span class="style-text-big">Phân quyền</span>
+    </div>
+    <div class="ftable-container ftable-rolefull">
+        <ftable [role]="'role_role_item_mul_read'" [show_paging]="false" [showChecked]="false" [showSTT]="false" [model]="role_role_item_mul_service" [tparent]="this" [action]="action" [columns]="columns" [header_filter]="true" #table></ftable>
+    </div>
+</div>
+<simple-notifications [options]="notifications_options"></simple-notifications>

@@ -1,0 +1,13 @@
+<form (ngSubmit)="save()">
+    <form-template-1 *ngIf="admin_form.template == 'form1'" [set_admin_form]="admin_form" [set_model_service]="model_service"></form-template-1>
+    <div class="cbs_btn_action">
+            <button class="btn_secondary" type="button" (click)="click_cancel()">Hủy</button>
+        <button type="submit" class="cbs_btn btn_primary">Cập nhật</button>
+    </div>
+</form>
+<ng-container *ngIf="_show_admin_form">
+    <popup-form [model]="admin_form.admin_form_field" [save_disable]="true" [model_admin_form]="admin_form_edit_field" (confirmDone)="admin_table_column_save_done($event)" #obj_popup_form_edit_field></popup-form>
+</ng-container>
+<ng-container *ngIf="_show_admin_form">
+    <popup-form [model]="admin_form.admin_form_tab" [save_disable]="true" [model_admin_form]="admin_form_edit_tab" (confirmDone)="admin_tab_save_done($event)" #obj_popup_form_edit_tab></popup-form>
+</ng-container>

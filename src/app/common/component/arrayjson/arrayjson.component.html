@@ -1,0 +1,24 @@
+<div class="arrayjson">
+    <div class="arrayjson_item_block" *ngFor="let item_block of _value;let i1 = index;">
+        <div class="arrayjson_item_block_field" *ngFor="let item_type of _list_type;let i2 = index;">
+            <label class="arrayjon-label">{{item_type.name}}</label>
+            <div class="arrayjon-attribute">
+                <jsonitem [type]="item_type.type" [item_block]="item_block" [item_type]="item_type" (valueChanged)="change();" [name]="item_type.attribute + '_' + i1 + '_' + i2"></jsonitem>
+            </div>
+        </div>
+        <div class="arrayjson-button">
+            <button class="btn btn-primary" type="button" (click)="add_block(i1)">Thêm</button>
+            <button class="btn btn-cancel" type="button" (click)="remove_block(i1)">Xóa</button>
+        </div>
+    </div>
+    <div class="arrayjson_item_block" *ngIf="!_value.length">
+        <div class="arrayjson_item_block_field">
+            <label class="arrayjon-label"></label>
+            <div class="arrayjon-attribute"></div>
+            <div class="arrayjson-button">
+                <button class="btn btn-primary" type="button" (click)="add_block(-1)"   >Thêm</button>
+                <button class="btn btn-cancel"  type="button" (click)="remove_block(-1)">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>

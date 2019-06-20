@@ -1,0 +1,135 @@
+<div style="overflow-x: auto; overflow-y: hidden;-webkit-overflow-scrolling: touch;" class="table-container" id="table-container">
+    <div class="div_table" #div_table>
+        <table class="table_component table_{{this.table_name}}" #table>
+            <thead #thead class="header_container">
+                <tr id="trhead" [sortablejs]  [sortablejsOptions]="sortAdminTableColumn()">
+                    <th [ngStyle]="checkboxHeader" *ngIf="showChecked" class="id_check not_sortable">
+                        <div class="check_item"><input name="" type="checkbox" [(ngModel)]="check_all" (click)="checkAll()" /><span class="o_check"></span></div>
+                    </th>
+                    <th *ngIf="_showSTT" class="id_check not_sortable">STT </th>
+                    <th data-id="{{column ? column.id : ''}}" *ngFor="let column of _columns_header" [colSpan]="column && column.children && column.children.length ? column.children.length : 1"
+                        [ngStyle]="column && column.styleHeader ? column.styleHeader : {}" class="{{column && column['checked'] ? '': 'hide'}} header-column-{{model.tableName() + '-' + (column ? column.attribute : '')}} {{column && column.children && column.children.length ? 'table-th-colspan' : ''}} {{column ? column.class_header : ''}}">
+                        {{column && column.children ? column.label : ''}}
+                        <div *ngIf="column && column.children" class="multi_item_in_column">
+                            <a *ngFor="let item of column.children" class="{{item ? item.class_sort : ''}} {{item && item.sort && _sort && item.attribute == _sort.attribute ? _sort.sort_by.toLowerCase() : ''}}"
+                                href="javascript:void(0);" [ngStyle]="item ? item.styleHeader : ''" (click)="sort(item)">
+                                {{item.label ? item.label : model.attributeLabels()[item.attribute]}}
+                                <button *ngIf="check_role('admin_table_column_update')" (click)="admin_table_column_update(item)"
+                                    type="button" class="icon_action edit_column_fast">
+                                    <i class="icon icon-pencil"></i>
+                                </button>
+                            </a>
+                        </div>
+                        <div *ngIf="column && !column.children">
+                            <a class="{{column.class_sort}} {{!column.sort ? 'disable_sort' : 'sort'}} {{column.sort && _sort && column.attribute == _sort.attribute ? _sort.sort_by.toLowerCase() : ''}}"
+                                href="javascript:void(0);" (click)="sort(column)">
+                                {{column.label ? column.label : model.attributeLabels()[column.attribute]}}
+                            </a>
+                            <span></span>
+                            <button *ngIf="admin_table && check_role('admin_table_column_update')" (click)="admin_table_column_update(column)"
+                                type="button" class="icon_action edit_column_fast">
+                                <i class="icon icon-pencil"></i>
+                            </button>
+                        </div>
+                    </th>
+                    <th class="table_action not_sortable" *ngIf="_action && _action.length && _show_action" [ngStyle]="actionStyleHeader">Thao tác</th>
+                </tr>
+                <tr *ngIf="column_filter_flag && header_filter">
+                    <th *ngIf="showChecked">
+                    </th>
+                    <th *ngIf="_showSTT">
+                    </th>
+                    <th *ngFor="let column of columns" class="{{column['checked'] ? '': 'hide'}} {{column.class_header}}" [ngStyle]="column.styleHeader">
+                        <filterfieldchild [set_column]="column" [set_model]="model" (valueChanged)="filter($event)"></filterfieldchild>
+                    </th>
+                    <th *ngIf="_action && _action.length && _show_action"></th>
+                </tr>
+            </thead>
+            <tbody class="table_body" id="table-body" *ngIf="rows && rows.length" #tbody>
+                <tr *ngFor="let record of rows;let i = index" on-dblclick="db_click(record, i)" [class]="record.disable_row ? 'row-disabled':''">
+                    <td *ngIf="showChecked" [class]="uncheckable ? 'link-view': ''">
+                        <div class="check_item">
+                            <input name="" type="checkbox" [(ngModel)]="record.checked" (click)="getItemCheckAssign()" [disabled]="record.disable_row"/>
+                            <span class="o_check"></span>
+                        </div>
+                    </td>
+                    <td *ngIf="_showSTT">
+                        {{start + i + 1}}
+                    </td>
+                    <td *ngFor="let column of columns" class="{{column['checked'] ? '': 'hide'}} {{column.class_body}} table-body-td-colspan" [class]="renderClass(column)">
+                        <div *ngIf="(!column.update && column.update === undefined) || record[column.attribute + '_view'] || record.disable_row">
+                            <a *ngIf="column.view == 'detail'" [routerLink]="[column.link ? column.link : link_view,record.id]" class="hyper-link">
+                                {{record[column.attribute]}}
+                            </a>
+                            <div *ngIf="column.view == 'innerHTML' || column.view == 'html'">
+                                <span [innerHTML]="record[column.attribute]"></span>
+                            </div>
+                            <div *ngIf="column.view == 'checkbox'">
+                                <div class="check_item">
+                                    <input type="checkbox" disabled [checked]="record[column.attribute]" />
+                                    <span class="o_check"></span>
+                                </div>
+                            </div>
+                            <div *ngIf="!column.view || column.view === undefined || record[column.attribute + '_view']">
+                                {{record[column.attribute]}}
+                            </div>
+                        </div>
+                        <div *ngIf="!record[column.attribute + '_view'] && column.update && column.update !== undefined && !record.disable_row">
+                            <div *ngIf="column.update.type == 'select'">
+                                <div *ngIf="!record[column.attribute + '_table_update']">
+                                    <a *ngIf="attribute_value != record[disable_row_by_attribute]" class="edit_staff_handle" tooltip="sửa" [tooltipDisabled]="false"
+                                        [tooltipAnimation]="true" tooltipPlacement="top" (click)="run_update_func(column, record, i)">
+                                        <span *ngIf="record[column.attribute]" class="assigned">{{record[column.attribute]}}</span>
+                                        <span *ngIf="!record[column.attribute]" class="not-assigned">{{notAssign}}</span>
+                                    </a>
+                                    <a *ngIf="attribute_value == record[disable_row_by_attribute]" class="edit_staff_handle">
+                                        <span *ngIf="record[column.attribute]" class="assigned">{{record[column.attribute]}}</span>
+                                        <span *ngIf="!record[column.attribute]" class="not-assigned">{{notAssign}}</span>
+                                    </a>
+                                </div>
+                                <div *ngIf="record[column.attribute + '_table_update']">
+                                    <fselecttable [model]="model_update[table_name][record.id]" 
+                                    [show_value_default]="_model[column.attribute + '_show_value_default']"
+                                     [show_data_value]="_model[column.attribute + '_show_value']" [ignoreValue]="_model[column.attribute + '_ignore_value']" [attribute]="column.attribute"
+                                        [openselect]="true" [rownumber]='i' [numberrows]='rows.length' (valueChanged)="update_attribute(record, column)"></fselecttable>
+                                </div>
+                            </div>
+                            <div *ngIf="column.update.type == 'checkbox' && model_update[table_name] && model_update[table_name][record.id]">
+                                <fchecktable [model]="model_update[table_name][record.id]" [attribute]="column.attribute" (valueChanged)="current_user_id = record.id;update_attribute(record, column)"></fchecktable>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="td_action" *ngIf="_action && _action.length && _show_action">
+                        <ng-container  *ngFor="let action_i of action">
+                            <a tooltip="{{action_i.name}}" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top"
+                                [hidden]="!record['show_' + action_i.id]" class="{{action_i.class_a}}" *ngIf="action_i.link" [routerLink]="[action_i.link,{id:(record.id||record.ID)}]" >
+                                <i class="{{action_i.class_icon}}"></i>
+                            </a>
+                            <a tooltip="{{action_i.name}}" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top"
+                                [hidden]="!record['show_' + action_i.id]" class="{{action_i.class_a}}" *ngIf="!action_i.link" (click)="run_func(action_i, record, i)">
+                                <i class="{{action_i.class_icon}}"></i>
+                            </a>
+                        </ng-container>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="null == rows || '' == rows" #tbodyNo>
+                <tr>
+                    <td [colSpan]="columns.length + 1 + (_showSTT ? 1 : 0) + (_action && _action.length && _show_action ? 1 : 0)" class="no-info-msg" #adjustHeightNo>
+                        Không có kết quả được tìm thấy
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="table-footer" *ngIf="count">
+    <div class="table-pagingright" *ngIf="show_paging">
+        <paging [limit]="_limit" [showlimit]="true" [count]="count" [limit_data]="limit_data" [page]="_page" [range]="_range" (choosePaging)="filterHandle($event)"
+        (changeLimit)="changeLimit($event)" #paging></paging>
+    </div>
+    
+</div>
+  <exportexcel [this_parent]="this" [attribute]="'obj_export'"></exportexcel>
+  <importexcel [this_parent]="this" [attribute]="'obj_import'"></importexcel>
+  <loading *ngIf="loading"></loading>

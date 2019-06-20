@@ -1,0 +1,13 @@
+<div class="admin-table-to-form" *ngIf="admin_table && admin_form">
+    <div class="cbs_btn_action title div-admin-table">
+        <span class="style-text-big">{{admin_from_title_name}}</span>
+        <button (click)="editAdminFormField()" [hidden]="!role('admin_form_update')" class="cbs_btn2 btn_addstff btn_add_table_column {{admin_form.show_edit ? 'discard' : ''}}">
+            <i class="icon icon-pencil"></i>{{admin_form.show_edit ? 'Cancel admin form' : 'Edit admin form'}}
+        </button>
+        <button (click)="saveAdminForm()" *ngIf="admin_form.show_edit" [hidden]="!role('admin_form_update')" class="cbs_btn2 btn_addstff btn_add_table_column  {{admin_form.show_edit ? 'discard' : ''}}">
+            <i class="icon icon-pencil-edit"></i> Save admin form
+        </button>
+    </div>
+    <admin-form [show_admin_form]="true" [model_admin_form]="admin_form" [model]="model_service" (cancel_done)="click_cancel()" (save_done)="save_done()"></admin-form>
+</div>
+<simple-notifications [options]="notifications_options"></simple-notifications>

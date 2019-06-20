@@ -1,0 +1,26 @@
+<button class="btn btn-secondary hide" (click)="openPopupStatus(content)" id="showupdateStatus"></button>
+<ng-template ngbModalContainer></ng-template>
+<ng-template #content let-c="close" let-d="dismiss">
+    <form (ngSubmit)="save()">
+        <div class="modal-header">
+            <h6 class="modal-title text-uppercase">{{message.title ? message.title : 'Lưu mới bộ lọc'}}</h6>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="cbs_update_status_customer filterusername">
+                <ftextuser [(model)]="customerTemp"[display_label]="true" [attribute]="'name'"></ftextuser>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="cbs_btn_action">
+                <button type="button" class="btn_secondary" (click)="c('Close click')">
+                            Hủy</button>
+                <button type="submit" class="cbs_btn btn_primary">
+                    Lưu</button>
+               
+            </div>
+        </div>
+    </form>
+</ng-template>

@@ -1,0 +1,24 @@
+<div class="div_filter_field" id="{{id}}">
+    <div *ngIf="value && value.length" class="cbs-filter {{filter_field.show_popup ? 'active' : ''}}" tooltip="{{value}}" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="{{value.length < 120 ? 'top':'bottom'}}">
+
+        <a href="javascript:void(0);" (click)="open_popup();">
+            <span>
+                {{label}} : {{value}}
+                <i class="icon icon-dow_seting"></i>
+            </span>
+        </a>
+        <a *ngIf="!filter_field.filter_default_field" href="javascript:void(0);" (click)="delete_event();">
+                <i class="icon icon-cancel-button"></i>
+        </a>
+    </div>
+    <div class="div_filter_field_item" *ngIf="filter_field.show_popup">
+        <filterfieldchild [set_column]="column" [set_show]="true" [set_label_show]="false" [set_model]="model" (valueChanged)="filter($event)"></filterfieldchild>
+        <div class="field_filter_text">
+                <button type="button" (click)="and()"><i class="icon icon-plus"></i></button>
+        </div>
+        <div class="div_filter_field_result" *ngIf="column && (column.filter.type != 'select' && column.filter.type != 'multiselect')">
+                <button type="button" (click)="cancel()" class="btn_secondary">Hủy</button>
+                <button type="button" (click)="add()" class="cbs_btn btn_primary ok-button">OK</button>
+        </div>
+    </div>
+</div>

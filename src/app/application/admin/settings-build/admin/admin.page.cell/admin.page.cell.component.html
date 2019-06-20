@@ -1,0 +1,9 @@
+<div class="admin-other" *ngIf="admin_page_cell.type == 'other'">
+    <admin-other [model]="admin_page_cell.fk_table_admin_other"></admin-other>
+</div>
+<div class="admin-table" *ngIf="admin_page_cell.type == 'table'">
+    <admin-table [admin_page]="admin_page" [model]="admin_page_cell.fk_table_admin_table"></admin-table>
+</div>
+<div class="admin-form" *ngIf="admin_page_cell.type == 'form'">
+    <admin-form [model_admin_form]="admin_page_cell.fk_table_admin_form"></admin-form>
+</div>

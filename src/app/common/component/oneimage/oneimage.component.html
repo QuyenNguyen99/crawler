@@ -1,0 +1,31 @@
+<div class="oneimage-theme-1" *ngIf="theme == 1">
+    <button type="button" (click)="click_broswer()" *ngIf="_flag_upload" class="btn_img" #button>
+        <i class="icon icon-image"></i>Chọn ảnh</button>
+    <div class="file-img img-box" [hidden]="!_value || _value === undefined">
+        <img src="{{link_image}}" class="img-responsive image-item" (load)="fix_auto_rotate($event)" />
+        <div class="loadding" *ngIf="!loaded"><img src="/assets/image/loading-gear.gif" /></div>
+        <a href="javascript:void(0);" class="delete" (click)="delete_image();">
+            <i class="icon icon-recycle-bin" tooltip="Xóa" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top"></i>
+        </a>
+    </div>
+</div>
+<div class="oneimage-theme-2" *ngIf="theme == 2">
+    <div class="check_img_box" *ngIf="!link_image && _flag_upload">
+        <a href="javascript:void(0);" (click)="click_broswer()">
+            <span class="cricle">
+                <i class="icon icon-addnew"></i>
+            </span>
+            <span class="">Chọn ảnh </span>
+        </a>
+    </div>
+    <p *ngIf="!link_image && _flag_upload">{{description}}</p>
+    <div class="edit_img" *ngIf="link_image && _flag_upload">
+        <a href="javascript:void(0);" (click)="click_broswer()">Chỉnh sửa ảnh</a>
+    </div>
+    <div class="img_uploaded" *ngIf="link_image">
+        <img id="img_uploaded" src="{{link_image}}" alt="" (load)="fix_auto_rotate($event)" />
+        <div class="loadding" *ngIf="!loaded"><img src="/assets/image/loading-gear.gif" /></div>
+    </div>
+</div>
+<input type="file" style="display:none;" (change)="upload_image($event)" #upload />
+<messageclose [this_parent]="this" [attribute]="'obj_message'"></messageclose>

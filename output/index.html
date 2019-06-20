@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1.0, user-scalable=no">
+    <title>crawlersystem</title>
+    <base href="/">
+    <script>
+        var START_TIME_BEGIN = new Date().getTime();
+        function readCookie(name) {
+            if (sessionStorage[name]) {
+                return sessionStorage[name];
+            }
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            var value = null;
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) {
+                    value = c.substring(nameEQ.length, c.length);
+                    break;
+                }
+            }
+            return value;
+        }
+        var token = readCookie('token');
+        if ((!token || token === undefined) && !location.pathname.match(/\/authenticate/gi)) {
+            window.location.href = '/authenticate?urlb=' + encodeURIComponent(window.location.href);
+        }
+    </script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+</head>
+
+<body>
+    <app-root></app-root>
+    <div class="page-loading">
+        <img src="assets/images/oval.svg" class="loading-icon" />
+    </div>
+    <div id="style"></div>
+<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="scripts.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
+
+</html>

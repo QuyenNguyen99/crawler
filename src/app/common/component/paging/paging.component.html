@@ -1,0 +1,14 @@
+<div class="table-paging" *ngIf="list_paging && list_paging.length">
+    <div class="change-limit" *ngIf="showlimit">
+        <span>Hiển thị : </span>
+        <selectupdate #page_limit [(ngModel)]="limit" [data]="limit_data" [hidden_search_box]="true" (valueChanged)="change_limit($event)"></selectupdate>
+    </div>
+    <ul>
+        <li *ngFor="let item of list_paging" class="{{item.active ? 'active' : ''}}" (click)="pagingHandle(item.id)">
+            <a>
+                {{item.icon ? '' : item.name}}
+                <i *ngIf="item.icon" class="{{item.icon}}"></i>
+            </a>
+        </li>
+    </ul>
+</div>

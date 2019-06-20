@@ -1,0 +1,30 @@
+<div class="selectupdate {{!flag_show_label ? 'selectupdate-default-hide' : ''}}" id="{{id}}" #multiselect>
+    <div class="selectupdate-show {{_disabled ? 'disabled' : ''}} {{show ? 'active' : ''}}" *ngIf="flag_show_label" (click)="open()">
+        <a href="javascript:void(0);">
+            <i *ngIf="_obj[_value] && _obj[_value].default" class="icon icon-eye"></i>
+            {{label ? label : _placeholder}}
+            <i class="icon icon-dow_seting"></i>
+        </a>
+    </div>
+    <div class="selectupdate-toggle {{!flag_show_label  ? 'selectupdate-toggle-show' : ''}} {{!flag_show_label || show ? 'show': 'hide' }}"
+        #dropdownContent (keydown)="keyPress($event)">
+        <div class="input-search" *ngIf="(!flag_show_label || show) && !_hidden_search_box">
+            <input #findlabel name="search" [(ngModel)]="searchString" (keyup)="search($event)" />
+        </div>
+        <perfect-scrollbar class="selectupdate-item " *ngIf="(!flag_show_label || show) && _data.length">
+            <div class="selectupdate-result" #droplist>
+                <ng-container *ngFor="let model of _data">
+                    <a class="{{(model.id === _value) || (_value == model.id && _value !== '' && model.id !== '') ? 'active' : ''}}" *ngIf="check_show(model)"
+                        (click)="change(model)" [attr.model]="model.id">
+                        <i *ngIf="model.default" class="icon icon-eye"></i>
+                        {{model.text}}
+                        <input class="temp" style="width: 1px; height: 1px; opacity: 0;" />
+                    </a>
+                </ng-container>
+            </div>
+        </perfect-scrollbar>
+        <div *ngIf="!_data.length" class="selectupdate-no-result">
+            <span>Không tìm thấy</span>
+        </div>
+    </div>
+</div>

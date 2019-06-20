@@ -1,0 +1,54 @@
+<div *ngIf="column.filter && typeof(column.filter.operator) == 'object'">
+    <div *ngFor="let op of column.filter.operator;let i = index">
+        <div class="field_filter_text" *ngIf="column.filter.type == 'text'" style="position: relative">
+            <input class="{{'filter-field-child-'+column.filter.type}} {{column.filter.class ? column.filter.class : ''}}" [(ngModel)]="model.table_search_attribute[column.filter.attribute][i]['value']"
+                (keyup)="filter($event)" />
+                <a style="position: absolute;
+                top: 16px;
+                right: 16px;
+                color: #ccc;" href="javascript:void(0);" (click)="remove(i)">
+                        <i class="icon icon-cancel-button"></i>
+                </a>
+        </div>
+        <div class="field_filter_text" *ngIf="column.filter.type == 'number'" style="position: relative">
+            <input class="{{'filter-field-child-'+column.filter.type}} {{column.filter.class ? column.filter.class : ''}}" [(ngModel)]="model.table_search_attribute[column.filter.attribute][i]['value']"
+                (keyup)="filter($event)" />
+                <a style="position: absolute;
+                top: 16px;
+                right: 16px;
+                color: #ccc;" href="javascript:void(0);" (click)="remove(i)">
+                        <i class="icon icon-cancel-button"></i>
+                </a>
+        </div>
+        <div class="field_filter_select" *ngIf="column.filter.type == 'select' && column.filter.listData" style="position: relative">
+            <selectupdate [(ngModel)]="model.table_search_attribute[column.filter.attribute][i]['value']" [set_show]="true" [set_flag_show_label]="false" (valueChanged)="filter($event)"
+                [data]="column.filter.listData"></selectupdate>
+                <a style="position: absolute;
+                top: 16px;
+                right: 16px;
+                color: #ccc;" href="javascript:void(0);" (click)="remove(i)">
+                        <i class="icon icon-cancel-button"></i>
+                </a>
+        </div>
+        <div class="field_filter_multiselect" class="field_filter_text" *ngIf="column.filter.type == 'multiselect' && column.filter.listData" style="position: relative">
+            <multiselect [(ngModel)]="model.table_search_attribute[column.filter.attribute][i]['value']" [set_label_show]="label_show" [set_show]="show" (valueChanged)="filter($event)" [options]="{multiple:true}"  
+                [data]="column.filter.listData"></multiselect>
+                <a style="position: absolute;
+                top: 16px;
+                right: 16px;
+                color: #ccc;" href="javascript:void(0);" (click)="remove(i)">
+                        <i class="icon icon-cancel-button"></i>
+                </a>
+        </div>
+        <div class="field_filter_date" *ngIf="column.filter.type == 'date'" style="position: relative">
+            <owl-date-time (onClear)="filter($event)" (onSelect)="filter($event)" type="calendar" dateFormat="DD-MM-YYYY" placeHolder=""
+                autoClose="true" [(ngModel)]="model.table_search_attribute[column.filter.attribute][i]['value']"></owl-date-time>
+                <a style="position: absolute;
+                top: 16px;
+                right: 16px;
+                color: #ccc;" href="javascript:void(0);">
+                        <i class="icon icon-cancel-button"></i>
+                </a>
+        </div>
+    </div>
+</div>

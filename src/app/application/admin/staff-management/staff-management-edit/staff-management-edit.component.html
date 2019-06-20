@@ -1,0 +1,73 @@
+<div class="edit-staff">
+        <button class="btn btn-secondary hide" (click)="openPopupStatus(content)" id="showEditStaff"></button>
+        <ng-template ngbModalContainer></ng-template>
+        <ng-template #content let-c="close" let-d="dismiss">
+            <form (ngSubmit)="save_user()">
+            <div class="modal-header">
+                <h6 class="modal-title text-uppercase">Sửa nhân viên</h6>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="cbs_update_status_customer">
+                    
+                        <div class="row" *ngIf="false">
+                            <div class="col-12-ipad col-lg-6 user_edit_add">
+                                <ftextuser [model]="_model" [attribute]="'email'"></ftextuser>
+                                <fmultiselectuser [model]="_model" [attribute]="'user_role_mul'"></fmultiselectuser>
+                            </div>
+                            <div class="col-12-ipad col-lg-6">
+                                <ftextuser [model]="_model" [attribute]="'display_name'"></ftextuser>
+                                <ftextuser [model]="_model" [attribute]="'phone'"></ftextuser>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="true">
+                            <div class="col-12-ipad col-lg-6 user_edit_add">
+                                <div class="cbs_item_row row clearfix">
+                                    <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                                        <label>Email đăng nhập</label>
+                                    </div>
+                                    <div class="cbs_style_ip col-7-ipad col-xs-12 col-lg-7">
+                                        {{_model.email}}
+                                    </div>
+                                </div>
+                                <div class="cbs_item_row row clearfix">
+                                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                                            <label>Họ và tên</label>
+                                        </div>
+                                        <div class="cbs_style_ip col-7-ipad col-xs-12 col-lg-7">
+                                            {{_model.display_name}}
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-12-ipad col-lg-6">
+                                <div class="cbs_item_row row clearfix">
+                                    <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                                        <label>Điện thoại di động</label>
+                                    </div>
+                                    <div class="cbs_style_ip col-7-ipad col-xs-12 col-lg-7">
+                                        {{_model.phone}}
+                                    </div>
+                                </div>
+                                <fmultiselectuser [model]="_model" [attribute]="'user_role_mul'"></fmultiselectuser>
+                            </div>
+                        </div>
+                       
+                   
+                </div>
+                <div class="cbs_update_status_customer">
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <div class="cbs_btn_action">
+                            <button type="button" class="btn_secondary" (click)="c('Close click')">
+                                    Hủy</button>
+                            <button type="submit" class="cbs_btn btn_primary cbs_btn_message">
+                                Lưu</button>
+                          
+                        </div>
+            </div>
+        </form>
+        </ng-template>
+    </div>

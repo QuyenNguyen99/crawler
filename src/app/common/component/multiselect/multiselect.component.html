@@ -1,0 +1,56 @@
+<div class="checkboxlist"  id="{{id}}" #multiselect>
+    <div class="toggle-list {{_disabled ? 'disabled' : 'not_disabled'}}" *ngIf="label_show" (click)="openList()">
+        <div>
+            <a class="{{class_a}} {{show_label}}" *ngIf="!show_tooltip">
+                <ng-container *ngFor="let icon of icons" >
+                        <i class="{{icon}}"></i>
+                </ng-container>
+                <span [innerHTML]="show_label ? (label_const || label_const === '' ? label_const : (label ? label : '-- Chọn --')) : ''"> 
+                    
+                </span>
+            </a>
+            <a class="{{class_a}}" *ngIf="show_tooltip" tooltip="{{(label_const || label_const === '' ? label_const : label)}}" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">
+                <ng-container *ngFor="let icon of icons" >
+                        <i class="{{icon}}"></i>
+                </ng-container>
+                <span [innerHTML]="show_label ? (label_const || label_const === '' ? label_const : (label ? label : '-- Chọn --')) : ''"> 
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="pd10 list-item-in show" *ngIf="show && !_disabled" #dropdownContent (keydown)="keyPress($event)">
+        <div class="input-search" *ngIf="show && !_disabled && !_hidden_search_box">
+            <input #findlabel name="search" [(ngModel)]="searchString" (keyup)="search()" />
+        </div>
+        <div class="checkbox-label" *ngIf="show && !_disabled && data.length && show_check_all">
+            <label class="checkbox-label-item">
+                <a href="javascript:void(0);" (click)="checked_all = !checked_all;change_all(model)">{{checked_all ? 'Bỏ chọn tất cả' : 'Chọn tất cả'}}</a>
+            </label>
+        </div>
+        <perfect-scrollbar class="list-item"  (mouseover)="mouseOver($event)" (mouseout)="mouseOut($event)">
+            <div class="list-item-result" *ngIf="show && !_disabled && data.length" #checkboxList>
+                <ng-container *ngFor="let model of _data; let i = index;">
+                    <div class="checkbox-label {{(disable_checked_true && model.checked_default) || model.disable_display_column ? 'disabled' : ''}}" *ngIf="model.show">
+                        <label class="checkbox-label-item">
+                            <ng-container *ngIf="(disable_checked_true && model.checked_default) || model.disable_display_column">
+                                <input [attr.index]="i" type="checkbox" name="checkbox" value="{{model.id}}" disabled (change)="model.checked = !model.checked;change(model)" [checked]="model.checked" />
+                            </ng-container>
+                            <ng-container *ngIf="!((disable_checked_true && model.checked_default) || model.disable_display_column)">
+                                <input [attr.index]="i" type="checkbox" name="checkbox" value="{{model.id}}" (change)="model.checked = !model.checked;change(model)" [checked]="model.checked"  (click)="mouseClick($event)"/>
+                            </ng-container>
+                            <span [innerHTML]="model.label ? model.label : model.text">
+                            </span>
+                        </label>
+                    </div>
+                </ng-container>
+            </div>
+            <div *ngIf="!_data.length" class="no-result">
+                <span>Không tìm thấy</span>
+            </div>
+        </perfect-scrollbar>
+        <div class="div_filter_field_result" *ngIf="show_button">
+                <button type="button" class="btn_secondary">Hủy</button>
+                <button type="button" (click)="add()" class="cbs_btn btn_primary">OK</button>
+        </div>
+    </div>
+</div>

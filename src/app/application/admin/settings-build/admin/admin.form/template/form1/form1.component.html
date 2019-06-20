@@ -1,0 +1,18 @@
+<div class="form1-tab">
+    <div class="div-admin-form-tab-parent" *ngIf="admin_form.show_edit" [sortablejs]="admin_form.list_admin_form_tab" [sortablejsCloneFunction]="sortAdminFormTab()">
+        <div class="admin-form-tab" *ngFor="let item_admin_form_tab of admin_form.list_admin_form_tab">
+            <admin-form-tab *ngIf="!item_admin_form_tab.parent_id" [model_admin_form_tab]="item_admin_form_tab" [set_admin_form]="admin_form" [model]="model_service"></admin-form-tab>
+        </div>
+    </div>
+    <div class="div-admin-form-tab-parent" *ngIf="!admin_form.show_edit">
+        <div class="admin-form-tab" *ngFor="let item_admin_form_tab of admin_form.list_admin_form_tab">
+            <admin-form-tab *ngIf="!item_admin_form_tab.parent_id" [model_admin_form_tab]="item_admin_form_tab" [set_admin_form]="admin_form" [model]="model_service"></admin-form-tab>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="div-add-form-tab" *ngIf="admin_form.show_edit" [hidden]="!role('admin_form_update')" >
+        <button type="button" class="cbs_btn2 btn_addstff " (click)="createAdminFormTab(0)">
+            <i class="icon icon-plus"></i> Add admin form tab
+        </button>
+    </div>
+</div>

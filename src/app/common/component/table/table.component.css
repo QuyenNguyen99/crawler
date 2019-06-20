@@ -1,0 +1,19 @@
+.table_component tbody td.td_action{white-space: nowrap;}
+.no-info-msg{
+    text-align: center;
+}
+.td_action a{display: inline-block;margin-right:5px;}
+.table_component td .green{color:rgb(20, 238, 20);}
+.table_component td .red{color:red;}
+.table_component td .blue{color:rgb(30, 30, 219);}
+.table-th-colspan{padding:0px !important; line-height: 30px}
+.table-th-colspan > div{border-top: #ddd 1px solid;width:100% !important;}
+.table-th-colspan > div a{display: block;border-right: #ddd 1px solid;float:left;}
+.table-th-colspan > div a:last-child{border-right: none !important; width: 50px !important;}
+.table-footer{margin-bottom: 0px;float:left;width:100%;position: relative;}
+.hightlight{background-color:#3CAA61;color:#FFF;}
+.hightlight_out{transition: 5s all;}
+.table-total{margin-top:11px;float:left;}
+.table-paging{font-weight: bold;position: absolute;right:0px;}
+.table-paging > ul{display: inline-block;}
+.input[type=checkbox]:disabled{ opacity: 0.2; }

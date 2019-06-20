@@ -1,0 +1,7 @@
+<button type="button" (click)="click_broswer()" class="btn_img"><i class="icon icon-image"></i>Chọn file</button>
+<div class="file-img" [hidden]="!_value || _value === undefined">
+    <a href="{{link_file}}" target="_blank">{{link_file}}</a>
+    <a href="javascript:void(0);" class="delete" tooltip="Xóa" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top" (click)="delete_file();">Delete</a>
+</div>
+<input type="file" style="display:none;" (change)="upload_image($event)" #upload />
+<messageclose [this_parent]="this" [attribute]="'obj_message'"></messageclose>

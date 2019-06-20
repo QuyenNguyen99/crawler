@@ -1,0 +1,43 @@
+<div class="add-staff">
+    <button class="btn btn-secondary hide" (click)="openPopupStatus(content)" id="showAddStaff"></button>
+    <ng-template ngbModalContainer></ng-template>
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h6 class="modal-title text-uppercase">Thêm mới nhân viên</h6>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="cbs_update_status_customer">
+                <form (ngSubmit)="create_user()">
+                    <button type="submit" style="display:none;">Lưu</button>
+                    <div class="row">
+                        <div class="col-6-ipad col-lg-6 user_edit_add">
+                            <ftextuser [model]="user_service" [attribute]="'email'"></ftextuser>
+                            <ftextuser [model]="user_service" [attribute]="'display_name'"></ftextuser>
+                        </div>
+                        <div class="col-6-ipad col-lg-6 col-xs-12">
+                            <ftextuser [model]="user_service" [attribute]="'phone'"></ftextuser>
+                            <fmultiselectuser [model]="user_service" [attribute]="'user_role_mul'"></fmultiselectuser>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+            <div class="cbs_update_status_customer">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="cbs_btn_action">
+                <button type="button" class="btn_secondary" (click)="c('Close click')">
+                        Hủy
+                </button>
+                <button type="button" class="cbs_btn btn_primary" (click)="create_user()">
+                        Lưu
+                </button>
+                
+            </div>
+        </div>
+    </ng-template>
+</div>

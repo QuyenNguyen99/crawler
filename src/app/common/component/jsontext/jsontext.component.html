@@ -1,0 +1,17 @@
+<div class="jsontext">
+    <div class="jsontext-item" *ngFor="let item of data;let i = index;">
+        <div class="jsontext-item-1">
+            <input type="text" [(ngModel)]="item.key" placeholder="key" (keyup)="change()" />
+        </div>
+        <div class="jsontext-item-2">
+            <input type="text" [(ngModel)]="item.value" placeholder="value" (keyup)="change()" />
+        </div>
+        <div class="jsontext-item-option">
+            <button type="button" class="btn btn-primary" (click)="add_item(i + 1)">Add</button>
+            <button type="button" class="btn btn-cancel" (click)="delete_item(i)">Delete</button>
+        </div>
+    </div>
+    <div class="jsontext-option">
+        <button type="button" class="btn btn-primary" (click)="add_item(data.length)">Add</button>
+    </div>
+</div>

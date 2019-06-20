@@ -1,0 +1,33 @@
+<div class=admin-form-tab>
+    <h2><span>{{admin_form_tab.name}}</span> 
+        <button type="button" class="cbs_btn2 btn_addstff " *ngIf="admin_form.show_edit" [hidden]="!role('admin_form_update')" (click)="createAdminFormField()" >
+            <i class="icon icon-plus"></i>  Field
+        </button>
+        <button type="button" class="cbs_btn2 btn_addstff " *ngIf="admin_form.show_edit" [hidden]="!role('admin_form_update')" (click)="editAdminFormField()" >
+            <i class="icon icon-pencil"></i>
+        </button>
+        <button type="button" class="cbs_btn2 btn_addstff " *ngIf="admin_form.show_edit" [hidden]="!role('admin_form_update')" (click)="deleteAdminFormTab()" >
+            <i class="icon icon-recycle-bin"></i>
+        </button>
+        <button type="button" class="cbs_btn2 btn_addstff " *ngIf="admin_form.show_edit && typeof(admin_form_tab.id) == 'number'" [hidden]="!role('admin_form_update')" (click)="createAdminFormTab()" >
+            <i class="icon icon-plus"></i>  Tab
+        </button>
+        <button type="button" class="cbs_btn2 btn_addstff {{hidden ? '' : 'open' }}" *ngIf="admin_form.show_edit" [hidden]="!role('admin_form_update')" (click)="hidden = !hidden;">
+                <i *ngIf="admin_form.show_edit" class="menu-caret icon icon-arrows-right"></i>
+        </button>
+    </h2>
+    <div class="div-admin-form-field-parent" [hidden]="hidden" *ngIf="admin_form.show_edit" [sortablejs]="admin_form_tab['list']" [sortablejsOptions]="sortAdminFormField()">
+        <div class="admin-form-field" *ngFor="let item_admin_form_field of admin_form_tab['list']">
+            <admin-form-field *ngIf="item_admin_form_field.tableName() == 'admin_form_field'" [model_admin_form_field]="item_admin_form_field" [set_admin_form]="admin_form" [set_admin_form_tab]="admin_form_tab"
+                [model]="model_service"></admin-form-field>
+                <admin-form-tab *ngIf="item_admin_form_field.tableName() == 'admin_form_tab'" [model_admin_form_tab]="item_admin_form_field" [set_admin_form]="admin_form" [model]="model_service"></admin-form-tab>
+        </div>
+    </div>
+    <div class="div-admin-form-field-parent" *ngIf="!admin_form.show_edit">
+        <div class="admin-form-field" *ngFor="let item_admin_form_field of admin_form_tab['list']">
+            <admin-form-field *ngIf="item_admin_form_field && item_admin_form_field.tableName && item_admin_form_field.tableName() == 'admin_form_field'" [model_admin_form_field]="item_admin_form_field" [set_admin_form]="admin_form" [set_admin_form_tab]="admin_form_tab"
+                [model]="model_service"></admin-form-field>
+            <admin-form-tab *ngIf="item_admin_form_field && item_admin_form_field.tableName && item_admin_form_field.tableName() == 'admin_form_tab'" [model_admin_form_tab]="item_admin_form_field" [set_admin_form]="admin_form" [model]="model_service"></admin-form-tab>
+        </div>
+    </div>
+</div>

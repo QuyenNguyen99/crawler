@@ -1,0 +1,4 @@
+<div class="div_taginput" id="{{id}}" #taginput>
+    <rl-tag-input [(ngModel)]="_value" (addTag)="change($event)" (removeTag)="change($event)"  placeholder=""></rl-tag-input>
+</div>
+<textarea style="font-size:11px" id="{{id}}_paste"></textarea>

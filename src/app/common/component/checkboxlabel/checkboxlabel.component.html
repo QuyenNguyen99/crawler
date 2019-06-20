@@ -1,0 +1,6 @@
+<div class="checkbox-label">
+    <label class="checkbox-label-item">
+        <input type="checkbox" name="checkbox" value="{{model.id}}" (click)="chooseCheckbox(value)" [checked]="model.checked" #checkbox/>
+        <span>{{model.label ? model.label : model.text}}</span>
+    </label>
+</div>

@@ -1,0 +1,121 @@
+<ng-sidebar-container class="app" [ngClass]="{'mode-boxed': isBoxed, 'sidebar-opened': isOpened, 'theme-light': theme == 'light', 'mode-push': _mode == 'push', 'mode-dock': _mode == 'dock'}">
+  <ng-sidebar [(opened)]="isOpened" [(mode)]="_mode" [position]="'left'" [dockedSize]="'80px'" [autoCollapseWidth]="'991'"
+    *ngIf="!user_info.isFirstLogin()" [closeOnClickOutside]="isOver()" [showBackdrop]="isOver()" [sidebarClass]="'sidebar-panel'"
+    (onClosed)="closed()" #sidebar>
+    <nav class="menu" *ngIf="load">
+      <ul class="navigation" appAccordion>
+        <li class="navigation-item header-menu">
+          <div class="logo_top">
+            <h2 style="padding:10px"><i style="color:#3A995F">CRAWLER </i><i style="color:#fff">SYSTEM</i></h2>
+            <img *ngIf="_mode == 'dock' && !isMobile" src="assets/image/logo_five9.svg" alt="cybersale" class="cbs_logo_2">
+          </div>
+        </li>
+        <ng-container *ngFor="let menuitem of menuItems.MENUITEMS; let i = index;">
+          <li *ngIf="role(menuitem.role)" class="navigation-item">
+            <a *ngIf="!isMobile && menuitem.type === 'mainTab' && 'dock'!= _mode" [class]="menuitem.class">
+              <i class="icon {{ menuitem[('icon'+_mode)] }}"></i>
+              <span *ngIf="_mode == 'push'">{{menuitem.name}}</span>
+            </a>
+            <a *ngIf="isMobile && menuitem.type === 'mainTab'" [class]="menuitem.class">
+              <i class="icon {{ menuitem[('icon'+_mode)] }}"></i>
+              <span>{{menuitem.name}}</span>
+            </a>
+            <a class="navigation-link route_click {{menuitem.active_class}} {{menuitem.class}}" 
+              [routerLink]="menuitem.filter !== false ? [menuitem.state, menuitem.filter] : [menuitem.state]"
+              *ngIf="menuitem.type === 'link'" (click)="closeSidebar(menuitem)">
+              <i class="icon {{ menuitem[('icon'+_mode)]}}"></i>
+              <span>{{ menuitem.name  }}</span>
+              <span class="mr-auto"></span>
+              <span class="badge badge-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+              <i class="menu-caret icon icon-arrows-right" *ngIf="role(menuitem.role2) && menuitem.children && menuitem.children.length"></i>
+            </a>
+            <a class="navigation-link {{menuitem.active_class}}" href="javascript:;" *ngIf="menuitem.type === 'sub'">
+              <i class="icon {{ menuitem[('icon'+_mode)] }}"></i>
+              <span>{{ menuitem.name  }}</span>
+              <span class="mr-auto"></span>
+              <span class="badge badge-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+              <i class="menu-caret icon icon-arrows-right" *ngIf="role(menuitem.role2) && menuitem.children && menuitem.children.length"></i>
+            </a>
+            <ul class="navigation-submenu" *ngIf="menuitem.children && menuitem.children.length">
+              <ng-container *ngFor="let childitem of menuitem.children">
+                <li *ngIf="role(childitem.role)" class="navigation-item {{childitem.active_class}}" routerLinkActive="open">
+                  <a [routerLink]="childitem.filter !== false ? [childitem.state, childitem.filter] : [childitem.state]" (click)="closeSidebar(childitem)" class="navigation-link route_click relative">
+                      <i class="icon {{ childitem[('icon'+_mode)]}}"></i>
+                      <span>{{ childitem.name  }}</span>
+                      <span class="mr-auto"></span>
+                      <i class="menu-caret icon icon-arrows-right" *ngIf="role(childitem.role2) && childitem.children && childitem.children.length"></i>
+                  </a>
+                  
+
+                  <ul class="navigation-submenu" *ngIf="childitem.children && childitem.children.length">
+                    <ng-container *ngFor="let childitem2 of childitem.children">
+                      <li *ngIf="role(childitem2.role)" class="navigation-item {{childitem2.active_class}}" routerLinkActive="open">
+                        <a [routerLink]="childitem2.filter !== false ? [childitem2.state, childitem2.filter] : [childitem2.state]" (click)="closeSidebar(childitem2)" class="navigation-link route_click relative">{{ childitem2.name  }}</a>
+                      </li>
+                    </ng-container>
+                  </ul>
+
+
+                </li>
+              </ng-container>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+      <div class="footer">
+        Copyright © 2019 crawlersystem
+      </div>
+    </nav>
+  </ng-sidebar>
+
+  <perfect-scrollbar ng-sidebar-content class="app-inner page_inner" [config]="config" #mainScroll>
+    <a *ngIf="downing" class="cricle_totop" (click)="toTop()">
+      <i class="icon icon-striped-arrow-up"></i>
+    </a>
+    <div class="header_top">
+      <nav class="navbar custom-navbar bg-faded main-header">
+        <a href="javascript:void(0);" class="nav-link" id="table_resize" (click)="changeMode()">
+          <i class="icon icon-list_home">
+            <span></span>
+          </i>
+        </a>
+        <span class="mr-auto"></span>
+        <ul class="navbar-nav top-menu">
+          <li class="nav-item user-profile" ngbDropdown placement="bottom-right">
+            <a href="javascript:;" class="nav-link" ngbDropdownToggle>
+              <img src="{{'assets/images/avatar1.jpg'}}" class="navbar-avatar rounded-circle" id="image_avatar" />
+              <i class="icon icon-dow_seting"></i>
+            </a>
+            <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+              <div class="name_top">{{user_info.display_name}}</div>
+              <a (click)="editStaff()" class="dropdown-item" href="javascript:;">
+                <span>Cập nhật thông tin</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" (click)="changePassword()">
+                <span>Đổi mật khẩu</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a (click)="logout()" class="dropdown-item" href="javascript:;">
+                <span>Đăng xuất</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+      <div [hidden]="!error_active">
+        Không tìm thấy trang này
+      </div>
+    </div>
+  </perfect-scrollbar>
+
+</ng-sidebar-container>
+
+
+<change-password></change-password>
+<staff-edit [parent]="this"></staff-edit>
+<simple-notifications [options]="notifications_options"></simple-notifications>
+<ngx-loading [show]="user_info.loading"></ngx-loading>

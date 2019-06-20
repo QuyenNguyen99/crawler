@@ -1,0 +1,38 @@
+<div class="message">
+        <ng-template ngbModalContainer></ng-template>
+        <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h6 class="modal-title text-uppercase" id="message-title">{{message.title}}</h6>
+                <button type="button" class="close" id="header_close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="rotate-popup">
+                    <div class="rotate-popup" *ngFor="let item of _list_files;let i = index;">
+                        <div class="img-0">
+                            <img src="{{item.link}}" />
+                        </div>
+                        <div class="img-6">
+                            <img src="{{item.link}}" />
+                        </div>
+                        <div class="img-3">
+                            <img src="{{item.link}}" />
+                        </div>
+                        <div class="img-8">
+                            <img src="{{item.link}}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="cbs_btn_action">
+                        <button class="btn_secondary" (click)="click_cancel()">
+                                {{message.closeLabel && message.closeLabel !== undefined ? message.closeLabel : 'Đóng'}}</button>
+                        <button class="cbs_btn btn_primary cbs_btn_message" (click)="click_confirm(this)">
+                            <i class="icon color_green icon-next1"></i>{{message.confirmLabel && message.confirmLabel !== undefined ? message.confirmLabel : 'Đồng ý'}}</button>
+                       
+                    </div>
+            </div>
+        </ng-template>
+    </div>

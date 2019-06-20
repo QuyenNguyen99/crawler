@@ -1,0 +1,28 @@
+<div [ngSwitch]="admin_form_field.field_type">
+    <ftextuser *ngSwitchCase="'text'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></ftextuser>
+    <fpassworduser *ngSwitchCase="'password'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fpassworduser>
+    <ftextpwduser *ngSwitchCase="'textpwd'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></ftextpwduser>
+    <fselectuser *ngSwitchCase="'select'" [model]="model_service" [labelValue]="admin_form_field.name" (changeValue)="change_value_by_attribute()" [attribute]="admin_form_field.attribute"></fselectuser>
+    <ftextarea *ngSwitchCase="'textarea'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></ftextarea>
+    <fradio *ngSwitchCase="'radio'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fradio>
+    <fcheckbox *ngSwitchCase="'checkbox'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fcheckbox>
+    <fdropdowndateuser *ngSwitchCase="'dropdowndate'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fdropdowndateuser>
+    <fmultiselectuser *ngSwitchCase="'multiselect'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fmultiselectuser>
+    <fselectother *ngSwitchCase="'selectother'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fselectother>
+    <fcitycounty *ngSwitchCase="'citycounty'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fcitycounty>
+    <foneimage *ngSwitchCase="'oneimage'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></foneimage>
+    <fmanyimages *ngSwitchCase="'manyimages'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fmanyimages>
+    <fonefile *ngSwitchCase="'onefile'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fonefile>
+    <fmanyfiles *ngSwitchCase="'manyfiles'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fmanyfiles>
+    <fdaterangepicker *ngSwitchCase="'daterangepicker'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fdaterangepicker>
+    <farrayjson *ngSwitchCase="'arrayjson'" [model]="model_service" [labelValue]="admin_form_field.name" [list_type]="admin_form_field.data"
+        [attribute]="admin_form_field.attribute"></farrayjson>
+    <fjsontext *ngSwitchCase="'jsontext'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></fjsontext>
+    <ftaginput *ngSwitchCase="'taginput'" [model]="model_service" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></ftaginput>
+    <ftokeninput *ngSwitchCase="'tokeninput'" [model]="model_service" [data]="model_service[admin_form_field.attribute + '_data']" [labelValue]="admin_form_field.name" [attribute]="admin_form_field.attribute"></ftokeninput>
+    <div *ngSwitchCase="'view'">{{model_service.showAttribute(admin_form_field.attribute,model_service[admin_form_field.attribute])}}</div>
+    <div class="div_field_button" *ngIf="admin_form.show_edit">
+        <button (click)="edit_field_fast()" type="button" class="icon_action edit_field_fast"><i class="icon icon-pencil"></i></button>
+        <button (click)="delete_field_fast()" type="button" class="icon_action edit_field_fast"><i class="icon icon-recycle-bin"></i></button>
+    </div>
+</div>

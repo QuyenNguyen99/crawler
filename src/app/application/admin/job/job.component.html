@@ -1,0 +1,237 @@
+<style>
+    .table_>thead>tr>th,
+    .table_>tbody>tr>th,
+    .table_>tfoot>tr>th,
+    .table_>thead>tr>td,
+    .table_>tbody>tr>td,
+    .table_>tfoot>tr>td,
+    .table_ tr>td code {
+        font-size: 10px;
+        color: white !important;
+        padding: 3px;
+        border: none;
+    }
+
+    .table_ {
+        background-color: #444;
+        border: none
+    }
+
+    .value {
+        font-weight: normal;
+        font-size: 11px;
+        text-transform: uppercase
+    }
+</style>
+<div class="customer-list-popup" id="customer-list-popup" [hidden]="!role('job_read')">
+    <div class="div-admin-form-tab-parent">
+        <div class="admin-form-tab">
+            <div class="div-admin-form-field-parent">
+                <div class="admin-table-to-form col-6-ipad cbs_style_label col-xs-6 col-lg-6" *ngIf="job"
+                    style="border:1px solid #ccc">
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>ID:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.id}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Tên:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.NAME}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Loại Job:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7" *ngIf="job.JOB_JOB_TYPE_MUL">
+                            <ng-container *ngFor="let lg of job.JOB_JOB_TYPE_MUL.split(',')">
+                                <p><code>{{lg}}</code></p>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Loại nguồn:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p><code>{{job.SOURCE_TYPE}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="job.SOURCE_TYPE == 'Excel'">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>File excel:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p><a href="{{job.FILE_EXCEL}}">{{job.FILE_EXCEL}}</a></p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="job.SOURCE_TYPE == 'Sql'">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>SQL:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.SQL}}</p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="job.SOURCE_TYPE == 'Textarea'">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Textarea:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7 div-textarea">
+                            <p><code>{{job.TEXTAREA}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Nhóm Job:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.GROUP}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Giới hạn dữ liệu chạy batch:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.BATCH_LIMIT}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Giới hạn đồng bộ trong batch:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.MULTI_LIMIT}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Thời gian bắt đầu chạy JOB:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.START_TIME}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Thời gian kết thúc:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.FINISH_TIME}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Trạng thái hiện tại:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p><code>{{job.STATUS}}</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Ưu tiên:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.PRIORITY}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Thời gian tạo Job:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.CREATED_TIME}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Người tạo:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.CREATED_BY}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Thời gian cập nhật cuối:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.MODIFIED_TIME}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5-ipad cbs_style_label col-xs-12 col-lg-5">
+                            <label>Người cập nhật:</label>
+                        </div>
+                        <div class="col-7-ipad value col-xs-12 col-lg-7">
+                            <p>{{job.MODIFIED_BY}}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row" *ngIf="result.data">
+                        <div class="col-12-ipad cbs_style_label col-xs-12 col-lg-12">
+                            <h2>Tổng hợp kết quả chạy Job:</h2>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>NOT_RUNNING</th>
+                                    <th>ERROR</th>
+                                    <th>VALID</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let r of result.data">
+                                    <tr>
+                                        <td>{{r.NAME}}</td>
+                                        <td>{{r.NOT_RUNNING}}</td>
+                                        <td>{{r.ERROR}}</td>
+                                        <td>{{r.VALID}}</td>
+                                        <td>{{r.TOTAL}}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="admin-table-to-form col-6-ipad cbs_style_label col-xs-6 col-lg-6" *ngIf="log"
+                    style="overflow:scroll">
+                    <div class="row" style="height:800px">
+                        <table class="table table_">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Hành động</th>
+                                    <th>Nội dung Log</th>
+                                    <th>Thời gian tạo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let lg of log.list">
+                                    <tr>
+                                        <td>#{{lg.ID}}</td>
+                                        <td><code style="background-color: #00841c;">{{lg.ACTION}}</code></td>
+                                        <td>{{lg.MESSAGE}}</td>
+                                        <td style="color:rgb(115, 255, 97) !important">{{lg.CREATED_TIME}}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<simple-notifications [options]="notifications_options"></simple-notifications>

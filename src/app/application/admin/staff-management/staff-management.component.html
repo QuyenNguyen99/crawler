@@ -1,0 +1,78 @@
+<div class="staff-list customer-list-popup" id="customer-list-popup" [hidden]="!role(action_read)">
+    <div class="div-filter-backdrop {{filter_active ? 'active' : '' }}" (click)="filter_active=false;"></div>
+    <div class="div-filter-top cbs_btn_action title div-admin-table">
+        <span class="style-text-big">{{admin_table ? admin_table.name : ''}}</span>
+        <button (click)="addForm()" [hidden]="!role(action_create)" *ngIf="admin_table && admin_table.item_add && admin_form && admin_table.show_form_is_popup"
+            class="cbs_btn2 btn_addstff">
+            <i class="icon icon-plus"></i>{{admin_from_create_name}}
+        </button>
+        <a [routerLink]="[link_create]" [hidden]="!role(action_create)" *ngIf="admin_table && admin_table.item_add && admin_form && !admin_table.show_form_is_popup"
+            class="cbs_btn2 btn_addstff">
+            <i class="icon icon-plus"></i>{{admin_from_create_name}}
+        </a>
+
+        <button (click)="addTableColumn()" [hidden]="!role('admin_table_column_create')" class="cbs_btn2 btn_addstff btn_add_table_column">
+            <i class="icon icon-plus"></i>Thêm admin table column
+        </button>
+    </div>
+
+
+    <div class="div-filter-secondary clearfix  {{isMobile ? 'mobileMode':''}} {{isOpen ? '':'hiden'}}" *ngIf="data_load_success && model_filter_user">
+        <div class="div-filter-item">
+            <div class="div_filter_field" *ngFor="let filter_field of model_filter_user.list_filter_user_field">
+                <filterfield [set_filter_field]="filter_field" [set_model]="model_service" (valueChanged)="filterHandle($event)"></filterfield>
+            </div>
+        </div>
+        <div class="div-filter-action" *ngIf="data_column_filter && data_column_filter.length">
+            <multiselect [(ngModel)]="value_column_filter" [set_show_button]="true"  [set_show_check_all]="false" [set_label_const]="'Thêm tiêu chí'" [set_disable_checked_true]="true"
+                [class_a]="'cbs_addfilter'" [icons]="['icon icon-filter']" (valueChanged)="addFilterUserField($event.event)"
+                [data]="data_column_filter"></multiselect>
+        </div>
+    </div>
+    <div class="ftable-container">
+        <div class="actionbar_table">
+            <div class="total_customer">
+                Hiện có {{count}} bản ghi <a href="javascript:void(0);" (click)="reload()"><i class="icon icon-reload"></i></a>
+                <div class="filter_action_mobile"  (click)="isOpen = !isOpen">
+                        <a class="" ><i class="icon icon-filter"></i></a>
+                    </div>
+            </div>
+            <div class="actionbar_control">
+                <div class="select_assign_top" *ngIf="show_list_staff_assign">
+                    <selectupdate *ngIf="listStaffToAssign && listStaffToAssign.length" [data]="listStaffToAssign" [placeholder]="'Phân bổ nhanh'"
+                    (valueChanged)="assignMulti($event)" [(ngModel)]="assignStaff" [disabled]="(listAssign && listAssign.length > 0) ? '': 'disabled'"></selectupdate>
+                    <span *ngIf="!listStaffToAssign || !listStaffToAssign.length">không có người xử lý</span>
+                </div>
+                <button class="cbs_btn2 btn_addstff" [hidden]="!role(action_create)" type="button" (click)="addStaff()">
+                        <i class="icon icon-plus"></i>Thêm nhân viên
+                </button>
+                <div class="setting_table">
+                    <multiselect [(ngModel)]="value_column_display" [class_a]="" [set_label_const]="'Tùy chỉnh'" [set_show_tooltip]="true" [set_show_label]="false" [icons]="['icon icon-settings4', 'icon icon-dow_seting']"
+                        (valueChanged)="updateSettingColumns($event.event)" [set_show_check_all]="false" [data]="data_column_display"></multiselect>
+                </div>
+               
+            </div>
+        </div>
+
+        <ftable [role]="action_read" *ngIf="admin_table && model_service && admin_table_load" [set_admin_table]="admin_table" [dbclick_row]="admin_table.dbclick_row" [showChecked]="admin_table.columncheck" [showSTT]="admin_table.columnstt"
+        [model]="model_service" [tparent]="this" [action]="action" [columns]="columns" [disable_row_by_attribute]="disable_row_attribute"
+        [attribute_value]="disable_row_value" [disable_items]="disable_items"  (listAssignChoosen)="listAssign = $event || [] " (multiAssignDone)="listAssign = null; assignStaff = null;"
+            (getDataTableDone)="settingValue($event)" (admin_table_column_update_click)="admin_table_column_update_click($event)"  (orderDone)="orderDone($event)"
+            (table_load_true)="table_load_true()" (sortDone)="sortDone($event)" #table></ftable>
+    </div>
+    <button type="button" class="hide" data-toggle="modal" data-target="#myModal" id="showModal"></button>
+    <div id="datetime-picker-cover" class="datetime-picker-cover hide"></div>
+</div>
+<simple-notifications [options]="notifications_options"></simple-notifications>
+<filterusername #filterusername></filterusername>
+
+<popup-form [model]="model_service" [model_admin_form]="admin_form" (confirmDone)="reloadTableAdd($event)" #obj_popup_form></popup-form>
+<popup-form [model]="admin_table_column" [model_admin_form]="admin_form_table_column" (confirmDone)="admin_table_column_save_done($event)"
+    #obj_popup_form_admin_table_column></popup-form>
+<messageconfirm [this_parent]="this" #obj_message_confirm></messageconfirm>
+<staff-management-add [model]="user_service" (confirmDone)="reloadTableAdd($event)"></staff-management-add>
+<staff-management-edit [user_service]="user_service_update" (confirmDone)="reloadTable($event)"></staff-management-edit>
+<staff-management-changepassword [user_service]="user_service_update" (confirmDone)="reloadTable($event)"></staff-management-changepassword>
+
+<messageconfirm [this_parent]="this" [attribute]="'obj_delete'"></messageconfirm>
+<messageclose [this_parent]="this" [attribute]="'obj_confirm'"></messageclose>

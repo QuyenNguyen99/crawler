@@ -1,0 +1,6 @@
+<div class="admin-page" *ngIf="admin_page && list_admin_page_line.length">
+    <div class="admin-page-line col-sm-12" *ngFor="let item_admin_page_line of list_admin_page_line">
+        <admin-page-line [admin_page]="admin_page" [model]="item_admin_page_line"></admin-page-line>
+    </div>
+</div>
+<simple-notifications [options]="notifications_options"></simple-notifications>

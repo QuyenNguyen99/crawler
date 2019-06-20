@@ -1,0 +1,8 @@
+<ng-container *ngFor="let item of total; let i = index" [attr.data-index]="i" #tokeninputwrap>
+    <div class="checkboxlist div_tokeninput" id="tokeninputoperation_{{id}}_{{i}}" style="margin-bottom: 10px;" #tokeninputoperation>
+        <input type="text" id="{{id}}_{{i}}" #input />
+        <div id="tkoperation_{{id}}_{{i}}" class="operation and" style="display:none" (click)="toggle(i)">and</div>
+        <div id="tkadd_{{id}}_{{i}}" class="operation add" (click)="add(i)">+</div>
+        <div id="tkremove_{{id}}_{{i}}" class="operation remove" (click)="remove(i)">-</div>
+    </div>
+</ng-container>

@@ -1,0 +1,17 @@
+<div class="textpwd">
+    <div class="textpwd-item" *ngFor="let item of data;let i = index;">
+        <div class="textpwd-item-1">
+            <input type="text" [(ngModel)]="item.key" placeholder="key" (keyup)="change()" />
+        </div>
+        <div class="textpwd-item-2">
+            <input type="text" [(ngModel)]="item.value" placeholder="value" (keyup)="change()" />
+        </div>
+        <div class="textpwd-item-option">
+            <button type="button" class="btn btn-primary" (click)="add_item(i + 1)">Add</button>
+            <button type="button" class="btn btn-cancel" (click)="delete_item(i)">Delete</button>
+        </div>
+    </div>
+    <div class="textpwd-option">
+        <button type="button" class="btn btn-primary" (click)="add_item(data.length)">Add</button>
+    </div>
+</div>

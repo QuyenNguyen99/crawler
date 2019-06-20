@@ -1,0 +1,14 @@
+<ng-template ngbModalContainer></ng-template>
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h6 class="modal-title text-uppercase">{{admin_from_create_name}}</h6>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="cbs_update_status_customer">
+            <admin-form [model_admin_form]="admin_form" [save_label]="_savel_label" [cancel_label]="_cancel_label" [save_disable]="_save_disable" [model]="model_service" (cancel_done)="click_cancel()" (save_done)="save_done()"></admin-form>
+        </div>
+    </div>
+</ng-template>

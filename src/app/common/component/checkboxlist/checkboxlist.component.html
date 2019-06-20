@@ -1,0 +1,33 @@
+<div class="checkboxlist"  id="{{id}}" #checboxlist>
+    <div class="toggle-list" (click)="openList()">
+        <div>
+            <a class="{{class_a}}">
+                <ng-container *ngFor="let icon of icons" >
+                        <i class="{{icon}}"></i>
+                </ng-container>
+                 {{label}}
+            </a>
+        </div>
+    </div>
+    <div class="list-item-in {{show ? 'show':'hide'}}" #dropdownContent>
+        <div class="input-search">
+            <input #findlabel name="search" value='{{searchString}}' (keyup)="search(findlabel.value)" />
+        </div>
+        <div class="list-item">
+            <div *ngIf="attribute">
+                <fcheckboxlabel *ngFor="let value of _modelSearch[attribute]" [model]="value" (changeValue)="chooseCheckbox($event)"></fcheckboxlabel>
+                <div *ngIf="0 == _modelSearch[attribute].length" class="no-result">
+                    <span>Không tìm thấy</span>
+                </div>
+            </div>
+            <div *ngIf="attribute == null">
+                <ng-container  *ngFor="let value of _modelSearch">
+                    <fcheckboxlabel [model]="value" (changeValue)="chooseCheckbox($event)"></fcheckboxlabel>
+                </ng-container>
+                <div *ngIf="0 == _modelSearch.length" class="no-result">
+                    <span>Không tìm thấy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

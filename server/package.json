@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@google/maps": "^0.5.5",
+    "express": "^4.16.4",
+    "ibm_db": "^2.5.0",
+    "java": "^0.11.0",
+    "jdbc": "^0.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.2.1",
+    "mongodb": "^2.2.33",
+    "mysql-activerecord": "^0.8.6",
+    "nan": "^2.14.0",
+    "node-cron": "^2.0.3",
+    "node-geocoder": "^3.22.0",
+    "nodemailer": "^6.1.1",
+    "promise": "^8.0.3",
+    "xlsx": "^0.14.2"
+  }
+}

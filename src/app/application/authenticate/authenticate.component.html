@@ -1,0 +1,32 @@
+<div class="authenticate-login" id="wrapper">
+	<section class="box_login">
+		<div class="box_login_content">
+			<div class="logo">
+				<h2>
+					<i style="color:#3A995F">CRAWLER </i>
+					<i style="color:#000">SYSTEM</i>
+				</h2>
+			</div>
+			<div class="login_form">
+				<form  (ngSubmit)="login()" #loginForm="ngForm" onsubmit="return false;">
+					<ftext [model]="authenticate_service" [labelValue]="email_label"[options]="{class:'login_form_group'}" [attribute]="'email'"></ftext>
+					<fpassword [model]="authenticate_service" [labelValue]="password_label"[options]="{class:'login_form_group'}" [attribute]="'password'"></fpassword>
+					<div class="login_form_group">
+						<div class="login_check float_right">
+								<input type="checkbox" [(ngModel)]="authenticate_service.remember_me" name="remember_me"  #remember_me="ngModel" value="1">
+							<span class="o_check">Duy trì đăng nhập</span>
+							
+						</div>
+					</div>
+					<div class="login_form_group">
+						<button class="btn btn_primary float_right_dt">Đăng nhập</button>
+						<!-- <a href="/authenticate/forgotpassword" class="float_left_dt text_style forget_pass">Quên mật khẩu</a> -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	<footer></footer>
+</div>
+<simple-notifications [options]="notifications_options"></simple-notifications>
+<ngx-loading [show]="loading"></ngx-loading>

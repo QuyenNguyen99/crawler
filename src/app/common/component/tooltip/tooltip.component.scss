@@ -1,0 +1,49 @@
+@keyframes slowshow{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 0.7;
+    }
+}
+@-webkit-keyframes slowshow{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 0.7;
+    }
+}
+@-moz-keyframes slowshow{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 0.7;
+    }
+}
+.tooltip-cover{
+    position: absolute;
+    z-index: 10000;
+    opacity: 0.7;
+    animation: slowshow 1s linear;
+    .arrow,
+    .content{
+        float: left;
+    }
+}
+.arrow{
+    border-top: 6px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-right: 10px solid #000000;
+    margin-top: 4px;
+  }
+.hidden{
+    display: none !important;
+}
+.content{
+    background-color: #000000;
+    color: #ffffff;
+    padding: 3px;
+    border-radius: 3px;
+}

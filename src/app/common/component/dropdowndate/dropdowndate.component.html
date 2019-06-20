@@ -1,0 +1,12 @@
+<input type="hidden" #input />
+<div class="row">
+    <div class=" col-lg-4 col-sm-12 col-xs-12">
+        <selectupdate [data]="data_date" [value]="_value_date2" (valueChanged)="change_date($event)" [placeholder]="'-- Ngày --'" #select_day></selectupdate>
+    </div>
+    <div class="col-lg-4 col-sm-12  col-xs-12 mgt15-xs">
+        <selectupdate [data]="data_month" [value]="_value_month2" (valueChanged)="change_month($event)" [placeholder]="'-- Tháng --'" #select_month></selectupdate>
+    </div>
+    <div class="col-lg-4 col-sm-12  col-xs-12 mgt15-xs">
+        <selectupdate [data]="data_year" [value]="_value_year2" (valueChanged)="change_year($event)" [placeholder]="'-- Năm --'" #select_year></selectupdate>
+    </div>
+</div>
