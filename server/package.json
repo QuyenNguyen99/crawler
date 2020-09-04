@@ -7,7 +7,7 @@
     "jdbc": "^0.6.3",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.2.1",
-    "mongodb": "^2.2.33",
+    "mongodb": "^3.6.1",
     "mysql-activerecord": "^0.8.6",
     "nan": "^2.14.0",
     "node-cron": "^2.0.3",
